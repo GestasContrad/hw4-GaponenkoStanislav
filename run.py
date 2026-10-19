@@ -89,7 +89,7 @@ def run_s2(q, k=5):
 
 def run_all():
     for folder in ["S1", "S2", "S3"]:
-        os.makedirs(f"outputs/run1/{folder}", exist_ok=True)
+        os.makedirs(f"outputs/run2/{folder}", exist_ok=True)
 
     results = {"S1": [], "S2": [], "S3": []}
 
@@ -101,7 +101,7 @@ def run_all():
         corr1 = check_answer(ans1, q['answer'], q['value'], q['decimals'])
         results["S1"].append({"id": q['id'], "ans": ans1, "correct": corr1, "dur": dur1, "in": in1, "out": out1})
 
-        with open(f"outputs/run1/S1/{q['id']}_log.json", "w", encoding="utf-8") as f:
+        with open(f"outputs/run2/S1/{q['id']}_log.json", "w", encoding="utf-8") as f:
             json.dump({"answer": ans1, "duration": dur1, "in_tokens": in1, "out_tokens": out1}, f, indent=2)
 
         print("S2 (Think and vote)...")
@@ -109,7 +109,7 @@ def run_all():
         corr2 = check_answer(ans2, q['answer'], q['value'], q['decimals'])
         results["S2"].append({"id": q['id'], "ans": ans2, "correct": corr2, "dur": dur2, "in": in2, "out": out2})
 
-        with open(f"outputs/run1/S2/{q['id']}_log.json", "w", encoding="utf-8") as f:
+        with open(f"outputs/run2/S2/{q['id']}_log.json", "w", encoding="utf-8") as f:
             json.dump(logs2, f, indent=2)
 
         print("S3 (Tools)...")
@@ -120,7 +120,7 @@ def run_all():
         corr3 = check_answer(ans3, q['answer'], q['value'], q['decimals'])
         results["S3"].append({"id": q['id'], "ans": ans3, "correct": corr3, "dur": dur3, "in": in3, "out": out3})
 
-        with open(f"outputs/run1/S3/{q['id']}_log.json", "w", encoding="utf-8") as f:
+        with open(f"outputs/run2/S3/{q['id']}_log.json", "w", encoding="utf-8") as f:
             json.dump(logs3, f, indent=2)
 
     print("\nRESULTS")

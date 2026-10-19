@@ -1,0 +1,60 @@
+[
+  {
+    "round": 1,
+    "duration": 2.4,
+    "input_tokens": 222,
+    "output_tokens": 81,
+    "tool_calls": [
+      {
+        "id": "call_PMyvbPeLfF9f3hEkC9Hnt0FQ",
+        "function": {
+          "arguments": "{\"district\": \"Redfen\", \"topic\": \"2025 population\"}",
+          "name": "lookup"
+        },
+        "type": "function"
+      },
+      {
+        "id": "call_gsaHQTwjRQ1kx1G7Q7dLmr7I",
+        "function": {
+          "arguments": "{\"district\": \"Kelmarsh\", \"topic\": \"2025 population\"}",
+          "name": "lookup"
+        },
+        "type": "function"
+      },
+      {
+        "id": "call_5hLI3D1U17Z1VCMxYCFV6CxV",
+        "function": {
+          "arguments": "{\"district\": \"Ossford\", \"topic\": \"2025 population\"}",
+          "name": "lookup"
+        },
+        "type": "function"
+      }
+    ],
+    "content": null
+  },
+  {
+    "round": 2,
+    "duration": 1.59,
+    "input_tokens": 711,
+    "output_tokens": 25,
+    "tool_calls": [
+      {
+        "id": "call_ec7LlFuwF3RMvRTB3XpMmKT7",
+        "function": {
+          "arguments": "{\"expression\":\"20934 + 24117 - 30982\"}",
+          "name": "calculate"
+        },
+        "type": "function"
+      }
+    ],
+    "content": null
+  },
+  {
+    "round": 3,
+    "duration": 1.42,
+    "input_tokens": 748,
+    "output_tokens": 10,
+    "tool_calls": [],
+    "content": "ANSWER: yes | 14069"
+  }
+]

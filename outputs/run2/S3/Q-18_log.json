@@ -1,0 +1,52 @@
+[
+  {
+    "round": 1,
+    "duration": 1.86,
+    "input_tokens": 239,
+    "output_tokens": 58,
+    "tool_calls": [
+      {
+        "id": "call_16ARVftN7oM0liVl07NyExGm",
+        "function": {
+          "arguments": "{\"district\": \"Millbrook\", \"topic\": \"population in 2020 and 2025\"}",
+          "name": "lookup"
+        },
+        "type": "function"
+      },
+      {
+        "id": "call_kHxwyjDAe1PDgt361xZlr1fo",
+        "function": {
+          "arguments": "{\"expression\": \"0\"}",
+          "name": "calculate"
+        },
+        "type": "function"
+      }
+    ],
+    "content": null
+  },
+  {
+    "round": 2,
+    "duration": 1.82,
+    "input_tokens": 442,
+    "output_tokens": 34,
+    "tool_calls": [
+      {
+        "id": "call_V5APuoJNXcWFHSTufaqkTXky",
+        "function": {
+          "arguments": "{\"expression\":\"37203 * (1 + (37203 - 34590) / 34590)\"}",
+          "name": "calculate"
+        },
+        "type": "function"
+      }
+    ],
+    "content": null
+  },
+  {
+    "round": 3,
+    "duration": 1.49,
+    "input_tokens": 493,
+    "output_tokens": 13,
+    "tool_calls": [],
+    "content": "ANSWER: yes | 40,013.39"
+  }
+]

@@ -1,0 +1,84 @@
+[
+  {
+    "round": 1,
+    "duration": 1.87,
+    "input_tokens": 231,
+    "output_tokens": 101,
+    "tool_calls": [
+      {
+        "id": "call_2Hh1g2ro5eMdHmBsOiiteegk",
+        "function": {
+          "arguments": "{\"district\": \"Redfen\", \"topic\": \"2025/26 total pupils and number of schools\"}",
+          "name": "lookup"
+        },
+        "type": "function"
+      },
+      {
+        "id": "call_XvGHd61O14h6gPp83UDZcMN8",
+        "function": {
+          "arguments": "{\"district\": \"Ashgrove\", \"topic\": \"2025/26 total pupils and number of schools\"}",
+          "name": "lookup"
+        },
+        "type": "function"
+      },
+      {
+        "id": "call_MiWCKvTSpia9zOgsJmkOjZsB",
+        "function": {
+          "arguments": "{\"district\": \"Millbrook\", \"topic\": \"2025/26 total pupils and number of schools\"}",
+          "name": "lookup"
+        },
+        "type": "function"
+      }
+    ],
+    "content": null
+  },
+  {
+    "round": 2,
+    "duration": 1.95,
+    "input_tokens": 743,
+    "output_tokens": 89,
+    "tool_calls": [
+      {
+        "id": "call_s00NHma4CfQbALeAHhlJvtDH",
+        "function": {
+          "arguments": "{\"expression\": \"3147/10\"}",
+          "name": "calculate"
+        },
+        "type": "function"
+      },
+      {
+        "id": "call_RBi4XugNeLhmMbYTl4hSxRdl",
+        "function": {
+          "arguments": "{\"expression\": \"8837/24\"}",
+          "name": "calculate"
+        },
+        "type": "function"
+      },
+      {
+        "id": "call_sefxNMyUZ8ZK53u6RtWksBMP",
+        "function": {
+          "arguments": "{\"expression\": \"5562/15\"}",
+          "name": "calculate"
+        },
+        "type": "function"
+      },
+      {
+        "id": "call_fykAT3OYaOqS2VtdjsFLg8tv",
+        "function": {
+          "arguments": "{\"expression\": \"8837/24 - 3147/10\"}",
+          "name": "calculate"
+        },
+        "type": "function"
+      }
+    ],
+    "content": null
+  },
+  {
+    "round": 3,
+    "duration": 1.27,
+    "input_tokens": 873,
+    "output_tokens": 12,
+    "tool_calls": [],
+    "content": "ANSWER: Redfen | 53.51"
+  }
+]

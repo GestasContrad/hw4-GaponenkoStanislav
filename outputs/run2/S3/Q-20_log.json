@@ -1,0 +1,76 @@
+[
+  {
+    "round": 1,
+    "duration": 2.47,
+    "input_tokens": 229,
+    "output_tokens": 88,
+    "tool_calls": [
+      {
+        "id": "call_UByrxchHyjV7jDOv7LRmygl9",
+        "function": {
+          "arguments": "{\"district\": \"Ossbridge\", \"topic\": \"2025 budget and population\"}",
+          "name": "lookup"
+        },
+        "type": "function"
+      },
+      {
+        "id": "call_zdPu6NAImRBK5t8agTf6gqJ7",
+        "function": {
+          "arguments": "{\"district\": \"Ashgrove\", \"topic\": \"2025 budget and population\"}",
+          "name": "lookup"
+        },
+        "type": "function"
+      },
+      {
+        "id": "call_tKm1WumH4kZWyTyGkETsHdmD",
+        "function": {
+          "arguments": "{\"district\": \"Harrowfield\", \"topic\": \"2025 budget and population\"}",
+          "name": "lookup"
+        },
+        "type": "function"
+      }
+    ],
+    "content": null
+  },
+  {
+    "round": 2,
+    "duration": 2.1,
+    "input_tokens": 735,
+    "output_tokens": 88,
+    "tool_calls": [
+      {
+        "id": "call_aMr8u6APQs4c43nomeiePE0c",
+        "function": {
+          "arguments": "{\"expression\": \"9284.5*1000000/52904\"}",
+          "name": "calculate"
+        },
+        "type": "function"
+      },
+      {
+        "id": "call_1AJSnyxB3G766iRUvOHFn72H",
+        "function": {
+          "arguments": "{\"expression\": \"10488.1*1000000/58760\"}",
+          "name": "calculate"
+        },
+        "type": "function"
+      },
+      {
+        "id": "call_6tSGiv43KmuJpCN8b9JYyx7f",
+        "function": {
+          "arguments": "{\"expression\": \"16021.7*1000000/90212\"}",
+          "name": "calculate"
+        },
+        "type": "function"
+      }
+    ],
+    "content": null
+  },
+  {
+    "round": 3,
+    "duration": 1.75,
+    "input_tokens": 863,
+    "output_tokens": 15,
+    "tool_calls": [],
+    "content": "ANSWER: Ashgrove | 2,993.34"
+  }
+]

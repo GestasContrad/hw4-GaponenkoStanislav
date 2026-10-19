@@ -1,0 +1,52 @@
+[
+  {
+    "round": 1,
+    "duration": 2.57,
+    "input_tokens": 228,
+    "output_tokens": 81,
+    "tool_calls": [
+      {
+        "id": "call_Yxzk4HJ1ejjB1ZREb8VZwWMz",
+        "function": {
+          "arguments": "{\"district\": \"Harrowfield\", \"topic\": \"2025 household water tariff and households/residents or total water payments\"}",
+          "name": "lookup"
+        },
+        "type": "function"
+      },
+      {
+        "id": "call_zjO5FGqpAh4HEP0XMO7gMG3D",
+        "function": {
+          "arguments": "{\"district\": \"Ossbridge\", \"topic\": \"2025 household water tariff and households/residents or total water payments\"}",
+          "name": "lookup"
+        },
+        "type": "function"
+      }
+    ],
+    "content": null
+  },
+  {
+    "round": 2,
+    "duration": 2.33,
+    "input_tokens": 741,
+    "output_tokens": 42,
+    "tool_calls": [
+      {
+        "id": "call_UoldRh6fhm4eq1WTlj3CSYDo",
+        "function": {
+          "arguments": "{\"expression\":\"(7146*1000*142.35/90212)-(3862*1000*142.35/52904)\"}",
+          "name": "calculate"
+        },
+        "type": "function"
+      }
+    ],
+    "content": null
+  },
+  {
+    "round": 3,
+    "duration": 1.59,
+    "input_tokens": 800,
+    "output_tokens": 13,
+    "tool_calls": [],
+    "content": "ANSWER: Harrowfield | 884.46"
+  }
+]

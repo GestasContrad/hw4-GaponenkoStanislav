@@ -1,0 +1,52 @@
+[
+  {
+    "round": 1,
+    "duration": 5.14,
+    "input_tokens": 217,
+    "output_tokens": 74,
+    "tool_calls": [
+      {
+        "id": "call_OXGAd9BPfPCy59rmGmT0z8n6",
+        "function": {
+          "arguments": "{\"district\": \"Ashgrove\", \"topic\": \"2025/26 pupil count and number of schools\"}",
+          "name": "lookup"
+        },
+        "type": "function"
+      },
+      {
+        "id": "call_HtJPTzL6OB3sYZqQjTO72PAt",
+        "function": {
+          "arguments": "{\"district\": \"Millbrook\", \"topic\": \"2025/26 pupil count and number of schools\"}",
+          "name": "lookup"
+        },
+        "type": "function"
+      }
+    ],
+    "content": null
+  },
+  {
+    "round": 2,
+    "duration": 4.23,
+    "input_tokens": 568,
+    "output_tokens": 25,
+    "tool_calls": [
+      {
+        "id": "call_9Bg4l2FxnD0vXqee1R2vOO8C",
+        "function": {
+          "arguments": "{\"expression\":\"8837/24 - 5562/15\"}",
+          "name": "calculate"
+        },
+        "type": "function"
+      }
+    ],
+    "content": null
+  },
+  {
+    "round": 3,
+    "duration": 4.21,
+    "input_tokens": 611,
+    "output_tokens": 12,
+    "tool_calls": [],
+    "content": "ANSWER: Millbrook | 2.59"
+  }
+]
