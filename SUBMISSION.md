@@ -212,22 +212,34 @@ We always use the latest figures from the census and budgets for 2025. Our code 
 ### B2 — Tests
 
 ```text
-<!-- pytest output -->
+tests/test_tools.py::test_lookup_finds_correct_number PASSED                                                                                                                                                                                  [ 10%]
+tests/test_tools.py::test_lookup_handles_misspelled_and_similar_names PASSED                                                                                                                                                                  [ 20%]
+tests/test_tools.py::test_lookup_ignores_archived_profile PASSED                                                                                                                                                                              [ 30%]
+tests/test_tools.py::test_lookup_applies_correction_for_brightwater PASSED                                                                                                                                                                    [ 40%]
+tests/test_tools.py::test_lookup_handles_unknown_district PASSED                                                                                                                                                                              [ 50%]
+tests/test_tools.py::test_calculate_basic_math PASSED                                                                                                                                                                                         [ 60%]
+tests/test_tools.py::test_calculate_refuses_import_os PASSED                                                                                                                                                                                  [ 70%]
+tests/test_tools.py::test_calculate_refuses_class_access PASSED                                                                                                                                                                               [ 80%]
+tests/test_tools.py::test_calculate_refuses_huge_exponents PASSED                                                                                                                                                                             [ 90%]
+tests/test_tools.py::test_calculate_handles_division_by_zero PASSED
 ```
 
 ### B3 — The loop
 
-- Round limit, and why:
-- Where the logs are:
-- Real Q-09 conversation compared with my A3 version, what is different:
+- **Round limit, and why:** 10 rounds. This is enough for complex questions that need to look up 3 districts and perform several math steps (which takes about 5-6 rounds), but it prevents the model from wasting tokens and money in an infinite loop if it gets stuck on an error
+
+- **Where the logs are:** Saved as JSON files in the outputs/ folder
+- **Real Q-09 conversation compared with my A3 version, what is different:**  The real model combined the lookup calls for Brightwater and Millbrook into a single round using parallel tool calling (exactly as I planned). But, the exact math expressions the model sent to calculate had extra spaces compared to my handwritten JSON, and the model added some polite text before outputting the final "ANSWER:" string
 
 ### B4 — Three strategies
 
 **What I kept the same:**
 
 <!-- model, temperature, k, prompts, answer format, anything else -->
+I kept the model (gpt-5.6-luna), the formatting instruction (Reply strictly as ANSWER: <name> | <number>), and the target questions identical across all three strategies. reasoning_effort="none" was used in all API calls to allow tool usage and identical model configuration.
 
-**My rule for a correct answer** (written before the first full run):
+**My rule for a correct answer** (written before the first full run): I split the model's output by |. The text part must exactly match the correct answer (case-insensitive). The number part is parsed as a float. I round both the model's number and the true value to the required decimals. The answer is marked correct if the absolute difference between them is <= 10^-decimals (which allows a difference of 1 in the last digit as permitted)
+
 
 | Run | Strategy | Correct /20 | Unanswered | Input tokens | Output tokens | Median seconds per question | Total seconds | Cost ($) |
 |---|---|---:|---:|---:|---:|---:|---:|---:|
