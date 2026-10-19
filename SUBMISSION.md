@@ -325,7 +325,7 @@ I kept the model (gpt-5.6-luna), the formatting instruction (Reply strictly as A
 
 > When the tool description was changed to a vague "Looks things up.", the model's accuracy dropped and its formatting broke. Without knowing exactly what the tool can find (like budget, population, or area), the LLM struggled to formulate the correct search queries in the topic argument. For example, in Q-03 it returned a completely wrong number (0.01), likely because it failed to find the correct data or hallucinated the math. It also lost focus on the formatting constraints: it failed to round numbers in Q-01 and Q-05, and illegally added "percentage points" to the final answer in Q-02. A detailed tool description acts as a mini-prompt that gives the model context for planning; without it, the model acts lost.
 
-### C2 — Three mistakes explained (Q2 for S1, Q8 For S2, Q11 For S3)
+### C2 — Three mistakes explained (Q2 for S1, Q8 For S2, Q12 For S3)
 
 1. **S1 (Direct) mistake on Q-02**
 
