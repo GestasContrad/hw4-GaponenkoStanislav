@@ -1,0 +1,60 @@
+[
+  {
+    "round": 1,
+    "duration": 2.24,
+    "input_tokens": 228,
+    "output_tokens": 79,
+    "tool_calls": [
+      {
+        "id": "call_qCw2ZcGOmiahEIpfE9TcquTG",
+        "function": {
+          "arguments": "{\"district\": \"Harrowfield\", \"topic\": \"2025 household water tariff and households or residents/water payments\"}",
+          "name": "lookup"
+        },
+        "type": "function"
+      },
+      {
+        "id": "call_vIZwlYVSiLnKSeLtlkVvJw4X",
+        "function": {
+          "arguments": "{\"district\": \"Ossbridge\", \"topic\": \"2025 household water tariff and households or residents/water payments\"}",
+          "name": "lookup"
+        },
+        "type": "function"
+      }
+    ],
+    "content": null
+  },
+  {
+    "round": 2,
+    "duration": 1.95,
+    "input_tokens": 739,
+    "output_tokens": 67,
+    "tool_calls": [
+      {
+        "id": "call_0YKWoklkQaU3lbSZv6OQQ5Qw",
+        "function": {
+          "arguments": "{\"expression\": \"7146*1000*142.35/90212\"}",
+          "name": "calculate"
+        },
+        "type": "function"
+      },
+      {
+        "id": "call_YurOD2mWijdTZEDsYIwAoKON",
+        "function": {
+          "arguments": "{\"expression\": \"3862*1000*142.35/52904\"}",
+          "name": "calculate"
+        },
+        "type": "function"
+      }
+    ],
+    "content": null
+  },
+  {
+    "round": 3,
+    "duration": 1.68,
+    "input_tokens": 837,
+    "output_tokens": 13,
+    "tool_calls": [],
+    "content": "ANSWER: Harrowfield | 884.46"
+  }
+]

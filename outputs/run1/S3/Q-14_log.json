@@ -1,0 +1,77 @@
+[
+  {
+    "round": 1,
+    "duration": 2.68,
+    "input_tokens": 222,
+    "output_tokens": 77,
+    "tool_calls": [
+      {
+        "id": "call_erYXemGkyYxcuWN2cZLguLf2",
+        "function": {
+          "arguments": "{\"district\": \"Tarnvale\", \"topic\": \"2025 household water use per resident per day in litres\"}",
+          "name": "lookup"
+        },
+        "type": "function"
+      },
+      {
+        "id": "call_UVXSjuOcW041jWBcs01OglRO",
+        "function": {
+          "arguments": "{\"district\": \"Ashgrove\", \"topic\": \"2025 household water use per resident per day in litres\"}",
+          "name": "lookup"
+        },
+        "type": "function"
+      }
+    ],
+    "content": null
+  },
+  {
+    "round": 2,
+    "duration": 2.02,
+    "input_tokens": 730,
+    "output_tokens": 67,
+    "tool_calls": [
+      {
+        "id": "call_BF6MLpHpUehefrRBdtYAQpWo",
+        "function": {
+          "arguments": "{\"expression\": \"5207*1000000/(71388*365)\"}",
+          "name": "calculate"
+        },
+        "type": "function"
+      },
+      {
+        "id": "call_Q941I0P5cW7MqDqcXbWyJ8AK",
+        "function": {
+          "arguments": "{\"expression\": \"4390*1000000/(58760*365)\"}",
+          "name": "calculate"
+        },
+        "type": "function"
+      }
+    ],
+    "content": null
+  },
+  {
+    "round": 3,
+    "duration": 2.28,
+    "input_tokens": 828,
+    "output_tokens": 39,
+    "tool_calls": [
+      {
+        "id": "call_v3638n4Ufajk7cRma8DWrcV7",
+        "function": {
+          "arguments": "{\"expression\":\"4390*1000000/(58760*365)-5207*1000000/(71388*365)\"}",
+          "name": "calculate"
+        },
+        "type": "function"
+      }
+    ],
+    "content": null
+  },
+  {
+    "round": 4,
+    "duration": 1.7,
+    "input_tokens": 884,
+    "output_tokens": 13,
+    "tool_calls": [],
+    "content": "ANSWER: Ashgrove | 4.85"
+  }
+]

@@ -1,0 +1,52 @@
+[
+  {
+    "round": 1,
+    "duration": 2.04,
+    "input_tokens": 224,
+    "output_tokens": 87,
+    "tool_calls": [
+      {
+        "id": "call_PagoAVLqaIkCBWxxkNar6uyH",
+        "function": {
+          "arguments": "{\"district\": \"Brightwater\", \"topic\": \"2025 household water tariff, households, or total household water payments in 2025\"}",
+          "name": "lookup"
+        },
+        "type": "function"
+      },
+      {
+        "id": "call_YPj914ORFhq6tAXz1EIFzpRV",
+        "function": {
+          "arguments": "{\"district\": \"Millbrook\", \"topic\": \"2025 household water tariff, households, or total household water payments in 2025\"}",
+          "name": "lookup"
+        },
+        "type": "function"
+      }
+    ],
+    "content": null
+  },
+  {
+    "round": 2,
+    "duration": 1.68,
+    "input_tokens": 853,
+    "output_tokens": 32,
+    "tool_calls": [
+      {
+        "id": "call_Be1nRxK9Rz8dGqggX7fZoZLW",
+        "function": {
+          "arguments": "{\"expression\":\"(3315-2806)*1000*142.35/1000000\"}",
+          "name": "calculate"
+        },
+        "type": "function"
+      }
+    ],
+    "content": null
+  },
+  {
+    "round": 3,
+    "duration": 1.92,
+    "input_tokens": 899,
+    "output_tokens": 13,
+    "tool_calls": [],
+    "content": "ANSWER: Brightwater | 72.45615"
+  }
+]
