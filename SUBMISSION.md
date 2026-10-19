@@ -1,7 +1,12 @@
 # HW4 — submission
 
+**Name:Gaponenko Stanislav**
+**Student ID:S23069758**
+**Group:CSS4007**
+**Repository: https://github.com/GestasContrad/hw4-GaponenkoStanislav**
+
 **AI assistance:** <!-- what you used, and for what. "None" is an answer too. -->
-> 
+> I used Gemini for some explanations, as coding assistant and to help with debugging.
 ---
 
 ## Part A — Plan on paper (Easy)
