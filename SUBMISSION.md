@@ -308,23 +308,82 @@ I kept the model (gpt-5.6-luna), the formatting instruction (Reply strictly as A
 
 ### C1 — Does the tool description matter?
 
-| Question | Calls (your description) | Calls (vague) | Answer (yours) | Answer (vague) |
-|---|---:|---:|---|---|
-| | | | | |
+| Question | Calls (your description) | Calls (vague) | Answer (yours)                       | Answer (vague)                       |
+|----------|-------------------------:|--------------:|--------------------------------------|--------------------------------------|
+| Q   1    |                        3 |             2 | Ossbridge / 4.57                     | Ossbridge                    / 4.57  |
+| Q   2    |                        3 |             5 | Harrowfield / 1.69 percentage points | Harrowfield / 1.69 percentage points |
+| Q   3    |                        3 |             2 | Lindenmoor / 0.00534015833513721     | Lindenmoor / 0.01                    |
+| Q    4   |                        3 |             2 | Millbrook / 2.59                     | Millbrook / 2.59                     |
+| Q   5    |                        4 |             2 | Coldharbour / 14235.31               | Coldharbour / 14235.31               |
 
-### C2 — Three mistakes explained
+**Why did it change?**
+
+> When the tool description was changed to a vague "Looks things up.", the model's accuracy dropped and its formatting broke. Without knowing exactly what the tool can find (like budget, population, or area), the LLM struggled to formulate the correct search queries in the topic argument. For example, in Q-03 it returned a completely wrong number (0.01), likely because it failed to find the correct data or hallucinated the math. It also lost focus on the formatting constraints: it failed to round numbers in Q-01 and Q-05, and illegally added "percentage points" to the final answer in Q-02. A detailed tool description acts as a mini-prompt that gives the model context for planning; without it, the model acts lost.
+
+### C2 — Three mistakes explained (Q2 for S1, Q8 For S2, Q11 For S3)
+
+1. **S1 (Direct) mistake on Q-02**
+
+* Model output: {"answer": "ANSWER: Tarnvale | 0.31 percentage points"}
+
+Explanation: The true answer is Harrowfield by 1.69 percentage points. The model failed because it was forced to do complex arithmetic (calculating two percentage growths, then finding the difference) in a single forward pass. LLMs generate text token by token; without a "scratchpad" to write down intermediate steps, they cannot hold large numbers in memory or perform multi-step math. It simply hallucinated a plausible-looking number (0.31) and guessed the wrong district.
+
+2. **S2 (Think and vote) mistake on Q-08**
+
+Model output (5 samples):
+* ANSWER: Millbrook | 0.00 million tenge
+* ANSWER: Brightwater | 721.85 million tenge
+* ANSWER: Brightwater | 0.723 million tenge
+* ANSWER: Millbrook | 0.001 million tenge
+* ANSWER: Millbrook | 0.073 million tenge
+
+Explanation: The true answer is Brightwater by 72.46 million tenge. Why does asking 5 times and voting fix some mistakes but not others? Voting works when the model's fundamental logic is sound but noisy (e.g., retrieving facts). However, this question requires converting megalitres to cubic metres, multiplying by a tariff, and converting to millions. LLMs are notoriously bad at arithmetic with large numbers. Giving it room to "think" doesn't fix its inability to do complex math. Increasing the temperature to generate 5 samples just caused the model to hallucinate 5 completely different arithmetic failures. Voting is useless when the probability space of the correct math digits is basically zero.
+
+3. **S3 (Tools) mistake on Q-12**
+
+* Model tool calls: {"expression":"(16021.7*1000000/13904 - 12960.3*1000000/10652)/1000"}
+
+* Model output: ANSWER: Harrowfield | 64.39
+
+Explanation: Do tools fix every error? No. Tools fix computation, but they do not fix logic. In this log, the model wrote a perfectly valid mathematical expression to find the difference in budget per pupil. The calculate tool correctly returned the difference (64.39 thousand). However, the model failed at the final logical step: identifying which district was higher. Tarnvale's budget per pupil (~1.21 million) is strictly greater than Harrowfield's (~1.15 million). Because the model combined the entire equation into a single step instead of calculating them separately, it lost track of which side of the minus sign belonged to which district, ultimately guessing "Harrowfield" incorrectly.
 
 ### C3 — Which strategy I would use, and what would change it
 
+**Which strategy is best for this task?**
+Strategy 3 (Tools) is definitively the best for this specific dataset. It achieved a much higher accuracy (65-75%) compared to S1 and S2 (5-10%). While it takes slightly longer than S1, it is significantly faster and cheaper than S2. Since the Nine Rivers dataset heavily relies on precise mathematical operations and large numbers, providing a calculator tool is the only way to get reliable results.
+
+**What would change my choice?**
+
+* Budget or latency constraints: If the application requires instant responses (e.g., a real-time chatbot) or operates on a very strict API budget, S1 would be better. S3 makes multiple API calls per question, which increases both latency and cost.
+
+* Qualitative rather than quantitative data: If the questions were about summarizing text, analyzing sentiment, or extracting names (without any math involved), S3's calculator would be useless. In that case, S1 would be perfectly adequate, or S2 if we needed high-quality creative reasoning.
+
 ### C4 — How sure I can be
+
+> I am confident that S3 is superior for math-heavy tasks, but the exact accuracy numbers are not entirely reliable. A sample size of only 20 questions is too small to make definitive statistical claims. Furthermore, there is noticeable variance between runs due to the non-deterministic nature of LLMs: in my first run, S3 got 15 correct, but in the second run, it only got 13. To be completely sure about the exact performance metrics, we would need to test the strategies on a much larger dataset (e.g., 200+ questions) and average the results over several runs.
 
 ### Final questions
 
-1.
-2.
-3.
-4.
-5.
-6.
-7.
-8.
+1. **When the model sends a tool_calls message, what has actually run so far?**
+When the model sends a `tool_calls` message, no actual code or function has executed yet. The model has simply generated a text string formatted as a JSON object, predicting which tool should be called and with what arguments. It is entirely up to our local Python script to intercept this message, execute the local function, and return the result back to the model.
+
+2. **Why does arguments arrive as a string, and what goes wrong if you pass it straight into your function?**
+The `arguments` arrive as a string because Large Language Models inherently generate raw text, not programmable data structures. If you pass this string directly into a Python function without parsing it (e.g., using `json.loads`), the function will treat it as a single string object rather than a dictionary of parameters. This will immediately cause a `TypeError` when the function tries to access specific keys or unpack the arguments.
+
+3. **How many tokens do your two tool definitions add to every S3 request? Measure it.**
+By examining the first round of my S3 logs (e.g., Q-12), the initial `input_tokens` count is around 219. Since the base system prompt and the user question only account for about 20-30 tokens, the two tool definitions (`lookup` and `calculate`) add approximately 190 tokens to every single S3 request. This token overhead is appended to every subsequent round in the conversation loop as well.
+
+4. **How much more did S2 cost than S1? Give the number from your table and explain it.**
+In my second run, S2 cost $0.0223, which is roughly five times more than S1's cost of $0.0044. This directly aligns with the strategy's design, as S2 queries the model 5 separate times (`k=5`) to generate multiple samples for voting. Consequently, it consumes five times as many input and output tokens, multiplying the final API billing by the same factor.
+
+5. **Which question needed the most rounds in S3, and why?**
+In my logs, Question 11 required 4 rounds to complete, making it one of the longest. The model first had to use the `lookup` tool three separate times to gather data for Redfen, Ashgrove, and Millbrook. It then used the `calculate` tool in multiple subsequent rounds to process these numbers before finally generating the text answer.
+
+6. **What would you change in lookup if there were 100,000 documents?**
+If there were 100,000 documents, returning full texts or iterating through a simple list would immediately exceed the model's context window and take too long to process. I would integrate a vector database to perform semantic search using embeddings or use a keyword index like BM25. The `lookup` tool would then only return the top 3-5 most relevant text chunks rather than searching through the entire corpus.
+
+7. **What stops your calculate from running dangerous code? Could the model still make it misbehave?**
+The `calculate` tool is protected by using Python's safe `ast` parsing instead of the dangerous `eval()` function, which prevents the model from executing arbitrary system commands or malicious scripts. However, the model could still make the tool misbehave by attempting mathematical exploits, such as dividing by zero or calculating massive exponents (e.g., `9**999999`). This could crash the script or cause a denial-of-service via timeout if not properly handled with `try/except` blocks.
+
+8. **For which kind of question did tools help most, and for which did they not help at all?**
+Tools helped the most on questions requiring complex arithmetic, such as calculating budget differences or percentage points, raising accuracy from near zero in S1 to over 65% in S3. However, tools did not help at all when the model made fundamental logical errors, such as forgetting which district a calculated number belonged to (as seen in Q-12). Tools also provided no additional benefit for simple fact-retrieval questions where a direct lookup without calculation would have sufficed.

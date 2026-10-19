@@ -13,7 +13,7 @@ TOOLS = [
         "type": "function",
         "function": {
             "name": "lookup",
-            "description": "Finds facts about a district in the Nine Rivers Region. Use it to get data like population, budget, or area.",
+            "description": "Looks things up.",
             "parameters": {
                 "type": "object",
                 "properties": {

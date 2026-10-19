@@ -88,63 +88,20 @@ def run_s2(q, k=5):
 
 
 def run_all():
-    for folder in ["S1", "S2", "S3"]:
-        os.makedirs(f"outputs/run2/{folder}", exist_ok=True)
+    os.makedirs("outputs/vague_test", exist_ok=True)
 
-    results = {"S1": [], "S2": [], "S3": []}
+    for q in QUESTIONS[:5]:
+        print(f"\nRunning {q['id']} (Vague Description Test)")
 
-    for q in QUESTIONS:
-        print(f"\nRunning {q['id']}")
-
-        print("S1 (Direct)...")
-        ans1, dur1, in1, out1 = run_s1(q)
-        corr1 = check_answer(ans1, q['answer'], q['value'], q['decimals'])
-        results["S1"].append({"id": q['id'], "ans": ans1, "correct": corr1, "dur": dur1, "in": in1, "out": out1})
-
-        with open(f"outputs/run2/S1/{q['id']}_log.json", "w", encoding="utf-8") as f:
-            json.dump({"answer": ans1, "duration": dur1, "in_tokens": in1, "out_tokens": out1}, f, indent=2)
-
-        print("S2 (Think and vote)...")
-        ans2, dur2, in2, out2, logs2 = run_s2(q)
-        corr2 = check_answer(ans2, q['answer'], q['value'], q['decimals'])
-        results["S2"].append({"id": q['id'], "ans": ans2, "correct": corr2, "dur": dur2, "in": in2, "out": out2})
-
-        with open(f"outputs/run2/S2/{q['id']}_log.json", "w", encoding="utf-8") as f:
-            json.dump(logs2, f, indent=2)
-
-        print("S3 (Tools)...")
         ans3, logs3 = run_s3_tools(f"{q['question']} Reply strictly as ANSWER: <name or yes/no> | <number>", q['id'])
-        dur3 = sum(r['duration'] for r in logs3)
-        in3 = sum(r['input_tokens'] for r in logs3)
-        out3 = sum(r['output_tokens'] for r in logs3)
-        corr3 = check_answer(ans3, q['answer'], q['value'], q['decimals'])
-        results["S3"].append({"id": q['id'], "ans": ans3, "correct": corr3, "dur": dur3, "in": in3, "out": out3})
 
-        with open(f"outputs/run2/S3/{q['id']}_log.json", "w", encoding="utf-8") as f:
+        calls_count = len(logs3) - 1
+
+        print(f"Answer (vague): {ans3}")
+        print(f"Tool calls rounds: {calls_count}")
+
+        with open(f"outputs/vague_test/{q['id']}_vague_log.json", "w", encoding="utf-8") as f:
             json.dump(logs3, f, indent=2)
-
-    print("\nRESULTS")
-    for strat, data in results.items():
-        correct = sum(1 for d in data if d['correct'])
-        unanswered = sum(1 for d in data if d['ans'] == "UNANSWERED")
-        tot_in = sum(d['in'] for d in data)
-        tot_out = sum(d['out'] for d in data)
-        tot_dur = sum(d['dur'] for d in data)
-
-        times = sorted([d['dur'] for d in data])
-        median_dur = times[len(times) // 2] if times else 0
-
-        print(f"{strat}: Correct: {correct}, Unanswered: {unanswered}, InTokens: {tot_in}, OutTokens: {tot_out}, MedianTime: {median_dur:.2f}s, TotalTime: {tot_dur:.2f}s")
-
-    print("\nPER QUESTION TABLE")
-    print("| Question | S1 | S2 | S3 |")
-    print("|---|:---:|:---:|:---:|")
-    for i in range(len(QUESTIONS)):
-        q_id = results["S1"][i]["id"]
-        c1 = "✓" if results["S1"][i]["correct"] else "✗"
-        c2 = "✓" if results["S2"][i]["correct"] else "✗"
-        c3 = "✓" if results["S3"][i]["correct"] else "✗"
-        print(f"| {q_id} | {c1} | {c2} | {c3} |")
 
 
 if __name__ == "__main__":

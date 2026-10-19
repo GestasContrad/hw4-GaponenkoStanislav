@@ -1,0 +1,60 @@
+[
+  {
+    "round": 1,
+    "duration": 2.16,
+    "input_tokens": 202,
+    "output_tokens": 77,
+    "tool_calls": [
+      {
+        "id": "call_J3XVavSFxR5Z0hlCC8D1qsuO",
+        "function": {
+          "arguments": "{\"district\": \"Lindenmoor\", \"topic\": \"2025 household water use per resident per day in litres\"}",
+          "name": "lookup"
+        },
+        "type": "function"
+      },
+      {
+        "id": "call_e1KTDxHCLMekHujH1ycRWdcK",
+        "function": {
+          "arguments": "{\"district\": \"Kelmarsh\", \"topic\": \"2025 household water use per resident per day in litres\"}",
+          "name": "lookup"
+        },
+        "type": "function"
+      }
+    ],
+    "content": null
+  },
+  {
+    "round": 2,
+    "duration": 2.37,
+    "input_tokens": 703,
+    "output_tokens": 59,
+    "tool_calls": [
+      {
+        "id": "call_TGo2bEfLUskombJTVGqT2gsX",
+        "function": {
+          "arguments": "{\"expression\": \"2151400/29051/365\"}",
+          "name": "calculate"
+        },
+        "type": "function"
+      },
+      {
+        "id": "call_fo2bH3qVozusyR4d9gOytqNa",
+        "function": {
+          "arguments": "{\"expression\": \"1739000/24117/365\"}",
+          "name": "calculate"
+        },
+        "type": "function"
+      }
+    ],
+    "content": null
+  },
+  {
+    "round": 3,
+    "duration": 1.88,
+    "input_tokens": 795,
+    "output_tokens": 12,
+    "tool_calls": [],
+    "content": "ANSWER: Lindenmoor | 0.01"
+  }
+]
